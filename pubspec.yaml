@@ -42,7 +42,7 @@ dependencies:
   # Flutter plugin for Firebase Cloud Messaging.
   firebase_messaging: ^6.0.16
   # An SVG rendering and widget library for Flutter.
-  flutter_svg: ^0.17.4
+  flutter_svg: ^0.18.0
   # A composable, multi-platform, Future-based API for HTTP requests.
   http: ^0.12.1
   # A flutter plugin for bringing hex colors to dart hexcolorPlugin.

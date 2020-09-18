@@ -16,7 +16,8 @@ import 'package:http/io_client.dart';
 
 class AppHttpClient {
   /// Base url for entire the app
-  static final String baseUrl = "https://cvideo-api-host.azurewebsites.net/api/v1";
+  // static final String baseUrl = "https://cvideo-api-host.azurewebsites.net/api/v1";
+  static final String baseUrl = "https://10.0.2.2:5001/api/v1";
 
   /// Sends an HTTP GET request with the given headers to the given URL.
   static Future<http.Response> get(String url, {Map<String, String> headers}) =>

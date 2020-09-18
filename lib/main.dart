@@ -9,6 +9,8 @@
  * -----
  * Copyright (c) Daxua Team
  */
+import 'dart:io';
+
 import 'package:cvideo_mobile/src/blocs/blocs.dart';
 import 'package:cvideo_mobile/src/blocs/simple_bloc_delegate.dart';
 import 'package:cvideo_mobile/src/screens/scr006/screen006.dart';
@@ -38,6 +40,8 @@ import 'src/blocs/scr001/authentication/scr001_authentication_barrel.dart';
 void main() async {
   /// This is used when using any plugins if the code is executed before runApp.
   WidgetsFlutterBinding.ensureInitialized();
+
+  HttpOverrides.global = new MyHttpOverride();
 
   /// Initial [AppLanguage]
   AppLanguage appLanguage = AppLanguage();
@@ -273,5 +277,14 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+}
+
+class MyHttpOverride extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext context) {
+    return super.createHttpClient(context)
+      ..badCertificateCallback =
+          (X509Certificate cert, String host, int port) => true;
   }
 }

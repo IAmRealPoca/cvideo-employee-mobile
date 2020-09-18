@@ -37,8 +37,8 @@ class PostProvider {
     AppStorage appStorage = AppStorage.instance;
     String token = await appStorage.readSecureApiToken();
     List<RecruitmentPost> recruitmentLists;
-    final response = await AppHttpClient.get("$url",
-        headers: {"Authorization": "bearer $token"}).then((response) {
+    await AppHttpClient.get("$url", headers: {"Authorization": "bearer $token"})
+        .then((response) {
       print(response.statusCode);
       if (response.statusCode == successCode) {
         List<dynamic> dataJson = json.decode(utf8.decode(response.bodyBytes));
