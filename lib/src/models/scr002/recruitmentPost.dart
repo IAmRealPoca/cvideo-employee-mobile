@@ -11,7 +11,7 @@
  */
 
 import 'company.dart';
-import 'major.dart';
+import 'skills.dart';
 
 class RecruitmentPost {
   int postId;
@@ -23,7 +23,7 @@ class RecruitmentPost {
   String jobDescription;
   String jobRequirement;
   String jobBenefit;
-  Major major;
+  Skills skills;
   int minSalary;
   int maxSalary;
   String created;
@@ -39,7 +39,7 @@ class RecruitmentPost {
       this.jobDescription,
       this.jobRequirement,
       this.jobBenefit,
-      this.major,
+      this.skills,
       this.minSalary,
       this.maxSalary,
       this.isApplied,
@@ -49,8 +49,8 @@ class RecruitmentPost {
     dynamic company = json['company'];
     Company companyRecruitment = Company.fromJson(company);
 
-    dynamic major = json['major'];
-    Major majorRecruitment = Major.fromJson(major);
+    dynamic skills = json['skills'];
+    Skills skillsRecruitment = Skills.fromJson(skills);
     return RecruitmentPost(
         postId: json['postId'] as int,
         company: companyRecruitment,
@@ -61,7 +61,7 @@ class RecruitmentPost {
         jobDescription: json['jobDescription'] as String ?? "",
         jobRequirement: json['jobRequirement'] as String ?? "",
         jobBenefit: json['jobBenefit'] as String ?? "",
-        major: majorRecruitment,
+        skills: skillsRecruitment,
         minSalary: json['minSalary'] as int,
         maxSalary: json['maxSalary'] as int,
         isApplied: json['isApplied'] as bool,

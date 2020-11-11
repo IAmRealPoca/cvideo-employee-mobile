@@ -21,7 +21,7 @@ class SCR003 extends StatefulWidget {
 class _SCR003State extends State<SCR003> {
   Completer<void> _refreshCompleter;
 
-  List<MajorDetail> listmajor;
+  List<SkillsDetail> listskills;
 
   List<Resume> listresume;
 
@@ -120,33 +120,35 @@ class _SCR003State extends State<SCR003> {
                 if (state is GetListCVSuccess) {
                   _refreshCompleter?.complete();
                   _refreshCompleter = Completer();
-                  listmajor = state.listMajor;
+                  listskills = state.listSkills;
                   listresume = state.listResume;
                   if (state.listResume.isEmpty) {
                     return buildNoCVScreen(
                         context,
                         AppLocalizations.of(context).translate("scr003.noCV"),
-                        state.listMajor,
+                        state.listSkills,
                         state.listResume,
                         lang);
                   } else {
+                    ///load list CVs when get success
                     return RefreshIndicator(
-                        child: buildSuccessScreen(
-                            context, state.listResume, state.listMajor, lang),
-                        onRefresh: () {
-                          BlocProvider.of<LoadListCVBloc>(context).add(
-                              FetchRefresh(
-                                  listResume: state.listResume, lang: lang));
-                          return _refreshCompleter.future;
-                        });
+                      child: buildSuccessScreen(
+                          context, state.listResume, state.listSkills, lang),
+                      onRefresh: () {
+                        BlocProvider.of<LoadListCVBloc>(context).add(
+                            FetchRefresh(
+                                listResume: state.listResume, lang: lang));
+                        return _refreshCompleter.future;
+                      },
+                    );
                   }
                 }
                 if (state is DeleteCVSuccess) {
-                  listmajor = state.listMajor;
+                  listskills = state.listSkills;
                   listresume = state.listResume;
                   return RefreshIndicator(
                       child: buildSuccessScreen(
-                          context, state.listResume, state.listMajor, lang),
+                          context, state.listResume, state.listSkills, lang),
                       onRefresh: () {
                         BlocProvider.of<LoadListCVBloc>(context).add(
                             FetchRefresh(
@@ -154,12 +156,10 @@ class _SCR003State extends State<SCR003> {
                         return _refreshCompleter.future;
                       });
                 }
-                List<MajorDetail> listMajor = [];
                 return buildFailedScreen(
-                    context,
-                    AppLocalizations.of(context)
-                        .translate("scr003.fetchFailed"),
-                    listMajor);
+                  context,
+                  AppLocalizations.of(context).translate("scr003.fetchFailed"),
+                );
               }),
             ));
       }

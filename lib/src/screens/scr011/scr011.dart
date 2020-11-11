@@ -60,7 +60,7 @@ class _SCR011State extends State<SCR011> {
     return BlocProvider<CVListBloc>(
       create: (context) {
         return CVListBloc(cvRepository: CVRepository())
-          ..add(CVListFetched(majorId: args.majorId));
+          ..add(CVListFetched(skillsId: args.skillsId));
       },
       child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
           builder: (authenContext, authenState) {
@@ -112,7 +112,7 @@ class _SCR011State extends State<SCR011> {
                           _refreshCompleter = Completer();
 
                           if (cvListstateFetch.cvlists.isNotEmpty) {
-                            //show list employee cv according to major of recruitment post
+                            //show list employee cv according to skills of recruitment post
                             return Expanded(
                               child: RefreshIndicator(
                                   child: Container(
@@ -155,12 +155,12 @@ class _SCR011State extends State<SCR011> {
                                   ),
                                   onRefresh: () {
                                     BlocProvider.of<CVListBloc>(context).add(
-                                        CVListFetched(majorId: args.majorId));
+                                        CVListFetched(skillsId: args.skillsId));
                                     return _refreshCompleter.future;
                                   }),
                             );
                           }
-                          //show button add cv if there is no cv in major
+                          //show button add cv if there is no cv in skills
                           return Expanded(
                             child: Container(
                               margin: EdgeInsets.symmetric(horizontal: 15),
@@ -415,7 +415,7 @@ class _SCR011State extends State<SCR011> {
 
 class ScreenArguments011 {
   final int postId;
-  final int majorId;
+  final int skillsId;
   final bool isApplied;
-  ScreenArguments011({this.postId, this.isApplied, this.majorId});
+  ScreenArguments011({this.postId, this.isApplied, this.skillsId});
 }

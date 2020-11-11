@@ -31,8 +31,8 @@ class DeleteCVEvent extends LoadListCVEvent {
 
 class AddNewCVEvent extends LoadListCVEvent {
   final String cvTitle;
-  final int majorId;
+  final int skillsId;
   final String lang;
 
-  const AddNewCVEvent({@required this.cvTitle, this.majorId, this.lang});
+  const AddNewCVEvent({@required this.cvTitle, this.skillsId, this.lang});
 }

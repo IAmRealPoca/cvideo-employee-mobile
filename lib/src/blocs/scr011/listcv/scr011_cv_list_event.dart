@@ -16,8 +16,8 @@ abstract class CVListEvent extends Equatable {
 }
 
 class CVListFetched extends CVListEvent {
-  final int majorId;
-  CVListFetched({this.majorId});
+  final int skillsId;
+  CVListFetched({this.skillsId});
   @override
   List<Object> get props => [];
 }

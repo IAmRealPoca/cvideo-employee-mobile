@@ -1,7 +1,7 @@
 export './cvdetail.dart';
 export 'employee_cvdetail.dart';
 export './field.dart';
-export './major.dart';
+export './skills.dart';
 export './resume.dart';
 export './session.dart';
 export './sessionType.dart';

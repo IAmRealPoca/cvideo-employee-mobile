@@ -35,7 +35,7 @@ class CVListBloc extends Bloc<CVListEvent, CVListState> {
     if (event is CVListFetched) {
       try {
         if (event is CVListFetched) {
-          cvLists = await cvRepository.fetchListCVs(event.majorId);
+          cvLists = await cvRepository.fetchListCVs(event.skillsId);
           yield CVListFetchedSucess(cvlists: cvLists);
         }
       } catch (_) {

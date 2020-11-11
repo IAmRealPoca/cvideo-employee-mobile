@@ -18,17 +18,19 @@ class LoadListCVBloc extends Bloc<LoadListCVEvent, LoadListCVState> {
       try {
         if (currentState is GetListCVUnitity) {
           final listResume = await repository.fetchResumeList();
-          final listMajor = await repository.fetchMajorList(event.lang);
-          yield GetListCVSuccess(listResume: listResume, listMajor: listMajor);
+          final listSkills = await repository.fetchMajorList(event.lang);
+          yield GetListCVSuccess(
+              listResume: listResume, listSkills: listSkills);
           return;
         }
         if (currentState is GetListCVSuccess) {
           yield GetListCVLoading();
           final listResume = await repository.fetchResumeList();
-          final listMajor = await repository.fetchMajorList(event.lang);
+          final listSkills = await repository.fetchMajorList(event.lang);
           yield listResume.isEmpty
               ? currentState.copyWith()
-              : GetListCVSuccess(listResume: listResume, listMajor: listMajor);
+              : GetListCVSuccess(
+                  listResume: listResume, listSkills: listSkills);
         }
       } catch (_) {
         yield GetListCVFailed();
@@ -37,8 +39,8 @@ class LoadListCVBloc extends Bloc<LoadListCVEvent, LoadListCVState> {
     if (event is FetchRefresh) {
       try {
         final listResume = await repository.fetchResumeList();
-        final listMajor = await repository.fetchMajorList(event.lang);
-        yield GetListCVSuccess(listResume: listResume, listMajor: listMajor);
+        final listSkills = await repository.fetchMajorList(event.lang);
+        yield GetListCVSuccess(listResume: listResume, listSkills: listSkills);
       } catch (_) {
         yield GetListCVFailed();
       }
@@ -49,9 +51,9 @@ class LoadListCVBloc extends Bloc<LoadListCVEvent, LoadListCVState> {
         final result = await repository.deleteCV(event.cvId);
         if (result.length > 0) {
           final listResume = await repository.fetchResumeList();
-          final listMajor = await repository.fetchMajorList(event.lang);
+          final listSkills = await repository.fetchMajorList(event.lang);
           yield DeleteCVSuccess(
-              result: result, listResume: listResume, listMajor: listMajor);
+              result: result, listResume: listResume, listSkills: listSkills);
         } else {
           yield GetListCVFailed();
         }
@@ -62,11 +64,12 @@ class LoadListCVBloc extends Bloc<LoadListCVEvent, LoadListCVState> {
     if (event is AddNewCVEvent) {
       try {
         yield GetListCVLoading();
-        final result = await repository.addNewCV(event.cvTitle, event.majorId);
+        final result = await repository.addNewCV(event.cvTitle, event.skillsId);
         if (result.length > 0) {
           final listResume = await repository.fetchResumeList();
-          final listMajor = await repository.fetchMajorList(event.lang);
-          yield GetListCVSuccess(listResume: listResume, listMajor: listMajor);
+          final listSkills = await repository.fetchMajorList(event.lang);
+          yield GetListCVSuccess(
+              listResume: listResume, listSkills: listSkills);
         } else {
           yield GetListCVFailed();
         }

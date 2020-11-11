@@ -12,6 +12,7 @@
 import 'package:cvideo_mobile/src/app_components/app_components.dart';
 import 'package:cvideo_mobile/src/blocs/blocs.dart';
 import 'package:cvideo_mobile/src/repositories/repositories.dart';
+import 'package:cvideo_mobile/src/screens/scr005/avatar_employee.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -285,12 +286,14 @@ class Profile extends StatelessWidget {
                           top: 100,
                           left: (size.width / 2) - 60,
                           child: Container(
-                            child: CircleAvatar(
-                              radius: 65,
-                              backgroundImage: state.employee.avatar.isEmpty
-                                  ? AssetImage("assets/screens/scr002/user.png")
-                                  : NetworkImage(state.employee.avatar),
-                            ),
+
+                            child: AvatarEmployee(image: state.employee.avatar.isEmpty ? AssetImage("assets/screens/scr002/user.png") : (state.employee.avatar),),
+                            // child: CircleAvatar(
+                            //   radius: 65,
+                            //   backgroundImage: state.employee.avatar.isEmpty
+                            //       ? AssetImage("assets/screens/scr002/user.png")
+                            //       : NetworkImage(state.employee.avatar),
+                            // ),
                           ),
                         ),
                       ],

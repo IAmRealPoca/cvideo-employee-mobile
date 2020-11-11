@@ -378,6 +378,7 @@ class Home extends StatelessWidget {
                 if (state is RecruitmentFetchSuccess) {
                   _refreshCompleter?.complete();
                   _refreshCompleter = Completer();
+
                   return Expanded(
                     child: RefreshIndicator(
                         child: Container(

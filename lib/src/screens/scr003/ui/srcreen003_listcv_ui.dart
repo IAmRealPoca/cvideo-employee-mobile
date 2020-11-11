@@ -702,266 +702,21 @@ Widget buildResumeItemLast(Resume resume, BuildContext context1,
 }
 
 Widget buildSuccessScreen(BuildContext context, List<Resume> listResume,
-    List<MajorDetail> listMajorDetail, String lang) {
+    List<SkillsDetail> listSkillsDetail, String lang) {
   int dropdownValue;
   var buildContext = context;
-  dropdownValue = dropdownValue ?? listMajorDetail[0].majorId;
+  dropdownValue = dropdownValue ?? listSkillsDetail[0].skillsId;
   TextEditingController _controllerTitle = TextEditingController();
   return Scaffold(
-      body: Container(
-        child: buildListResume(listResume, context, lang),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          bool _validate = true;
-          bool _hasTitle = false;
-          List<DropdownMenuItem<int>> _dropdownMenuItem = List();
-          for (MajorDetail major in listMajorDetail) {
-            _dropdownMenuItem.add(DropdownMenuItem<int>(
-              value: major.majorId,
-              child: Text(major.majorName),
-            ));
-          }
-
-          showDialog(
-              context: buildContext,
-              builder: (context) {
-                return StatefulBuilder(builder: (context, setState) {
-                  return AlertDialog(
-                    title: Text(
-                      AppLocalizations.of(context).translate("scr003.createCV"),
-                      style: TextStyle(color: AppColors.primaryDarkColor),
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                    actions: <Widget>[
-                      //button of dialog
-                      Container(
-                        margin: EdgeInsets.all(5),
-                        child: FlatButton(
-                            child: new Text(
-                              AppLocalizations.of(context)
-                                  .translate("scr003.btnCancel"),
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                            onPressed: () => Navigator.of(context).pop()),
-                      ),
-                      SizedBox(
-                        width: 9,
-                      ),
-                      Container(
-                        // color: Colors.blue,
-                        margin: EdgeInsets.all(5),
-                        padding: EdgeInsets.all(3),
-                        child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(
-                                  color: AppColors.primaryDarkColor,
-                                )),
-                            child: new Text(
-                              AppLocalizations.of(context)
-                                  .translate("scr003.btnCreateCV"),
-                              style:
-                                  TextStyle(color: AppColors.primaryDarkColor),
-                            ),
-                            onPressed: () => {
-                                  if (_validate == true)
-                                    {
-                                      //show error
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return new AlertDialog(
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                20.0))),
-                                                title: Text(AppLocalizations.of(
-                                                        context)
-                                                    .translate(
-                                                        "scr003.errorEmptyCV")),
-                                                actions: <Widget>[
-                                                  new FlatButton(
-                                                    child: new Text(
-                                                      AppLocalizations.of(
-                                                              context)
-                                                          .translate(
-                                                              "scr003.btnUnderStood"),
-                                                      style: TextStyle(
-                                                          color:
-                                                              Colors.red[300]),
-                                                    ),
-                                                    onPressed: () => {
-                                                      _validate = false,
-                                                      Navigator.of(context)
-                                                          .pop()
-                                                    },
-                                                  )
-                                                ]);
-                                          })
-                                    }
-                                  else
-                                    {
-                                      for (var cv in listResume)
-                                        {
-                                          if (cv.title.compareTo(
-                                                  _controllerTitle.text) ==
-                                              0)
-                                            {
-                                              _hasTitle = true,
-                                            }
-                                        },
-                                      if (!_hasTitle)
-                                        {
-                                          BlocProvider.of<LoadListCVBloc>(
-                                              buildContext)
-                                            ..add(AddNewCVEvent(
-                                                cvTitle: _controllerTitle.text,
-                                                majorId: dropdownValue,
-                                                lang: lang)),
-                                          Navigator.of(context).pop(),
-                                          _controllerTitle.text = "",
-                                        }
-                                      else
-                                        {
-                                          showDialog(
-                                              context: context,
-                                              builder: (loadListCVBlocContext) {
-                                                return new AlertDialog(
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    20.0))),
-                                                    title: Text(AppLocalizations
-                                                            .of(context)
-                                                        .translate(
-                                                            "scr003.errorDuplicateCV")),
-                                                    actions: <Widget>[
-                                                      new FlatButton(
-                                                        child: new Text(
-                                                          AppLocalizations.of(
-                                                                  context)
-                                                              .translate(
-                                                                  "scr003.btnUnderStood"),
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .red[300]),
-                                                        ),
-                                                        onPressed: () => {
-                                                          _hasTitle = false,
-                                                          _validate = true,
-                                                          Navigator.of(context)
-                                                              .pop()
-                                                        },
-                                                      )
-                                                    ]);
-                                              }),
-                                        }
-                                    }
-                                }),
-                      ),
-                    ],
-                    content: Builder(
-                      builder: (context) {
-                        //place to input
-                        return Container(
-                          // color: Colors.amber,
-                          margin: EdgeInsets.only(top: 20),
-                          width: displayWidth(context),
-                          height: displayHeight(context) * 0.25,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              TextField(
-                                controller: _controllerTitle,
-                                decoration: new InputDecoration(
-                                    border: new OutlineInputBorder(
-                                        borderSide:
-                                            new BorderSide(color: Colors.teal)),
-                                    hintText: AppLocalizations.of(context)
-                                        .translate("scr003.hintTextCV"),
-                                    helperText: AppLocalizations.of(context)
-                                        .translate("scr003.helpTextCV"),
-                                    labelText: AppLocalizations.of(context)
-                                        .translate("scr003.labelTextCV"),
-                                    prefixIcon: Icon(
-                                      Icons.title,
-                                      color: AppColors.primaryDarkColor,
-                                    ),
-                                    prefixText: ' ',
-                                    suffixStyle: TextStyle(
-                                      color: AppColors.primaryDarkColor,
-                                    )),
-                                //validation
-                                onChanged: (value) {
-                                  value.isEmpty
-                                      ? _validate = true
-                                      : _validate = false;
-                                },
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.only(left: 0),
-                                    child: Text(
-                                      AppLocalizations.of(context)
-                                          .translate("scr003.chooseMajor"),
-                                      style: TextStyle(
-                                          color: AppColors.primaryTextColor
-                                              .withOpacity(0.5),
-                                          fontSize: 13),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      width: displayWidth(context) * 0.25,
-                                      child: Center(
-                                        child: DropdownButton<int>(
-                                          items: _dropdownMenuItem,
-                                          value: dropdownValue,
-                                          elevation: 16,
-                                          style: TextStyle(
-                                              color:
-                                                  AppColors.primaryDarkColor),
-                                          underline: Container(
-                                            height: 2,
-                                            color: AppColors.primaryDarkColor,
-                                          ),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              dropdownValue = value;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                });
-              });
-        },
-        tooltip: AppLocalizations.of(context).translate("scr003.createCV"),
-        child: Icon(Icons.add),
-        backgroundColor: AppColors.secondaryLightColor,
-      ));
+    body: Container(
+      child: buildListResume(listResume, context, lang),
+    ),
+    floatingActionButton: listCVFloatingButton(listSkillsDetail, context,
+        _controllerTitle, listResume, dropdownValue, lang),
+  );
 }
 
-Widget buildFailedScreen(
-    BuildContext context, String message, List<MajorDetail> listMajorDetail) {
+Widget buildFailedScreen(BuildContext context, String message) {
   return Container(
     padding: EdgeInsets.fromLTRB(20, 250, 0, 0),
     child: Column(
@@ -985,279 +740,35 @@ Widget buildFailedScreen(
 }
 
 Widget buildNoCVScreen(BuildContext context, String message,
-    List<MajorDetail> listMajorDetail, List<Resume> listResume, String lang) {
+    List<SkillsDetail> listSkillsDetail, List<Resume> listResume, String lang) {
   var buildContext = context;
   int dropdownValue;
-  dropdownValue = dropdownValue ?? listMajorDetail[0].majorId;
+  dropdownValue = dropdownValue ?? listSkillsDetail[0].skillsId;
   TextEditingController _controllerTitle = TextEditingController();
   return Scaffold(
-      body: Container(
-        padding: EdgeInsets.fromLTRB(20, 250, 0, 0),
-        child: Column(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.bottomCenter,
-              child: SvgPicture.asset(
-                'assets/screens/scr003/job_seeker.svg',
-                width: displayWidth(context) * 0.03,
-                height: 90,
-                allowDrawingOutsideViewBox: true,
-              ),
+    body: Container(
+      padding: EdgeInsets.fromLTRB(20, 250, 0, 0),
+      child: Column(
+        children: <Widget>[
+          Container(
+            alignment: Alignment.bottomCenter,
+            child: SvgPicture.asset(
+              'assets/screens/scr003/job_seeker.svg',
+              width: displayWidth(context) * 0.03,
+              height: 90,
+              allowDrawingOutsideViewBox: true,
             ),
-            Text(message,
-                style: TextStyle(
-                    color: AppColors.primaryDarkColor,
-                    fontWeight: FontWeight.bold)),
-          ],
-        ),
+          ),
+          Text(message,
+              style: TextStyle(
+                  color: AppColors.primaryDarkColor,
+                  fontWeight: FontWeight.bold)),
+        ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          bool _validate = true;
-          bool _hasTitle = false;
-          List<DropdownMenuItem<int>> _dropdownMenuItem = List();
-          for (MajorDetail major in listMajorDetail) {
-            _dropdownMenuItem.add(DropdownMenuItem<int>(
-              value: major.majorId,
-              child: Text(major.majorName),
-            ));
-          }
-
-          showDialog(
-              context: context,
-              builder: (context) {
-                return StatefulBuilder(builder: (context, setState) {
-                  return AlertDialog(
-                    title: Text(
-                      AppLocalizations.of(context).translate("scr003.createCV"),
-                      style: TextStyle(color: AppColors.primaryDarkColor),
-                    ),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20.0))),
-                    actions: <Widget>[
-                      //button of dialog
-                      Container(
-                        margin: EdgeInsets.all(5),
-                        child: FlatButton(
-                            child: new Text(
-                              AppLocalizations.of(context)
-                                  .translate("scr003.btnCancel"),
-                              style: TextStyle(color: Colors.grey),
-                            ),
-                            onPressed: () => Navigator.of(context).pop()),
-                      ),
-                      SizedBox(
-                        width: 9,
-                      ),
-                      Container(
-                        // color: Colors.blue,
-                        margin: EdgeInsets.all(5),
-                        padding: EdgeInsets.all(3),
-                        child: FlatButton(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(18.0),
-                                side: BorderSide(
-                                  color: AppColors.primaryDarkColor,
-                                )),
-                            child: new Text(
-                              AppLocalizations.of(context)
-                                  .translate("scr003.btnCreateCV"),
-                              style:
-                                  TextStyle(color: AppColors.primaryDarkColor),
-                            ),
-                            onPressed: () => {
-                                  if (_validate == true)
-                                    {
-                                      //show error
-                                      showDialog(
-                                          context: context,
-                                          builder: (context) {
-                                            return new AlertDialog(
-                                                shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.all(
-                                                            Radius.circular(
-                                                                20.0))),
-                                                title: Text(AppLocalizations.of(
-                                                        context)
-                                                    .translate(
-                                                        "scr003.errorEmptyCV")),
-                                                actions: <Widget>[
-                                                  new FlatButton(
-                                                    child: new Text(
-                                                      AppLocalizations.of(
-                                                              context)
-                                                          .translate(
-                                                              "scr003.btnUnderStood"),
-                                                      style: TextStyle(
-                                                          color:
-                                                              Colors.red[300]),
-                                                    ),
-                                                    onPressed: () => {
-                                                      _validate = false,
-                                                      Navigator.of(context)
-                                                          .pop()
-                                                    },
-                                                  )
-                                                ]);
-                                          })
-                                    }
-                                  else
-                                    {
-                                      for (var cv in listResume)
-                                        {
-                                          if (cv.title.compareTo(
-                                                  _controllerTitle.text) ==
-                                              0)
-                                            {
-                                              _hasTitle = true,
-                                            }
-                                        },
-                                      if (!_hasTitle)
-                                        {
-                                          BlocProvider.of<LoadListCVBloc>(
-                                              buildContext)
-                                            ..add(AddNewCVEvent(
-                                                cvTitle: _controllerTitle.text,
-                                                majorId: dropdownValue,
-                                                lang: lang)),
-                                          Navigator.of(context).pop(),
-                                          _controllerTitle.text = "",
-                                        }
-                                      else
-                                        {
-                                          showDialog(
-                                              context: context,
-                                              builder: (loadListCVBlocContext) {
-                                                return new AlertDialog(
-                                                    shape: RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    20.0))),
-                                                    title: Text(AppLocalizations
-                                                            .of(context)
-                                                        .translate(
-                                                            "scr003.errorDuplicateCV")),
-                                                    actions: <Widget>[
-                                                      new FlatButton(
-                                                        child: new Text(
-                                                          AppLocalizations.of(
-                                                                  context)
-                                                              .translate(
-                                                                  "scr003.btnUnderStood"),
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .red[300]),
-                                                        ),
-                                                        onPressed: () => {
-                                                          _hasTitle = false,
-                                                          _validate = true,
-                                                          Navigator.of(context)
-                                                              .pop()
-                                                        },
-                                                      )
-                                                    ]);
-                                              }),
-                                        }
-                                    }
-                                }),
-                      ),
-                    ],
-                    content: Builder(
-                      builder: (context) {
-                        //place to input
-                        return Container(
-                          // color: Colors.amber,
-                          margin: EdgeInsets.only(top: 20),
-                          width: displayWidth(context),
-                          height: displayHeight(context) * 0.25,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              TextField(
-                                controller: _controllerTitle,
-                                decoration: new InputDecoration(
-                                    border: new OutlineInputBorder(
-                                        borderSide:
-                                            new BorderSide(color: Colors.teal)),
-                                    hintText: AppLocalizations.of(context)
-                                        .translate("scr003.hintTextCV"),
-                                    helperText: AppLocalizations.of(context)
-                                        .translate("scr003.helpTextCV"),
-                                    labelText: AppLocalizations.of(context)
-                                        .translate("scr003.labelTextCV"),
-                                    prefixIcon: Icon(
-                                      Icons.title,
-                                      color: AppColors.primaryDarkColor,
-                                    ),
-                                    prefixText: ' ',
-                                    suffixStyle: TextStyle(
-                                      color: AppColors.primaryDarkColor,
-                                    )),
-                                //validation
-                                onChanged: (value) {
-                                  value.isEmpty
-                                      ? _validate = true
-                                      : _validate = false;
-                                },
-                              ),
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.only(left: 0),
-                                    child: Text(
-                                      AppLocalizations.of(context)
-                                          .translate("scr003.chooseMajor"),
-                                      style: TextStyle(
-                                          color: AppColors.primaryTextColor
-                                              .withOpacity(0.5),
-                                          fontSize: 13),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Expanded(
-                                    child: Container(
-                                      width: displayWidth(context) * 0.25,
-                                      child: Center(
-                                        child: DropdownButton<int>(
-                                          items: _dropdownMenuItem,
-                                          value: dropdownValue,
-                                          elevation: 16,
-                                          style: TextStyle(
-                                              color:
-                                                  AppColors.primaryDarkColor),
-                                          underline: Container(
-                                            height: 2,
-                                            color: AppColors.primaryDarkColor,
-                                          ),
-                                          onChanged: (value) {
-                                            setState(() {
-                                              dropdownValue = value;
-                                            });
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    ),
-                  );
-                });
-              });
-        },
-        tooltip: AppLocalizations.of(context).translate("scr003.createCV"),
-        child: Icon(Icons.add),
-        backgroundColor: AppColors.secondaryLightColor,
-      ));
+    ),
+    floatingActionButton: listCVFloatingButton(listSkillsDetail, context,
+        _controllerTitle, listResume, dropdownValue, lang),
+  );
 }
 
 void showConfirm(BuildContext context1, String cvId, String lang) {
@@ -1304,4 +815,254 @@ void showConfirm(BuildContext context1, String cvId, String lang) {
 void onDelete(BuildContext context, String cvId, String lang) {
   BlocProvider.of<LoadListCVBloc>(context)
     ..add(DeleteCVEvent(cvId: cvId, lang: lang));
+}
+
+Widget listCVFloatingButton(
+    List<SkillsDetail> listSkillsDetail,
+    BuildContext buildContext,
+    TextEditingController _controllerTitle,
+    List<Resume> listResume,
+    int dropdownValue,
+    String lang) {
+  return FloatingActionButton(
+    onPressed: () {
+      bool _validate = true;
+      bool _hasTitle = false;
+      List<DropdownMenuItem<int>> _dropdownMenuItem = List();
+      for (SkillsDetail skills in listSkillsDetail) {
+        _dropdownMenuItem.add(DropdownMenuItem<int>(
+          value: skills.skillsId,
+          child: Text(skills.skillsName),
+        ));
+      }
+
+      showDialog(
+          context: buildContext,
+          builder: (context) {
+            return StatefulBuilder(builder: (context, setState) {
+              return AlertDialog(
+                title: Text(
+                  AppLocalizations.of(context).translate("scr003.createCV"),
+                  style: TextStyle(color: AppColors.primaryDarkColor),
+                ),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20.0))),
+                actions: <Widget>[
+//button of dialog
+                  Container(
+                    margin: EdgeInsets.all(5),
+                    child: FlatButton(
+                        child: new Text(
+                          AppLocalizations.of(context)
+                              .translate("scr003.btnCancel"),
+// "Y U no seperate this?",
+                          style: TextStyle(color: Colors.red),
+                        ),
+                        onPressed: () => Navigator.of(context).pop()),
+                  ),
+                  SizedBox(
+                    width: 9,
+                  ),
+                  Container(
+// color: Colors.blue,
+                    margin: EdgeInsets.all(5),
+                    padding: EdgeInsets.all(3),
+                    child: FlatButton(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(
+                              color: AppColors.primaryDarkColor,
+                            )),
+                        child: new Text(
+                          AppLocalizations.of(context)
+                              .translate("scr003.btnCreateCV"),
+                          style: TextStyle(color: AppColors.primaryDarkColor),
+                        ),
+                        onPressed: () => {
+                              if (_validate == true)
+                                {
+//show error
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return new AlertDialog(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20.0))),
+                                            title: Text(
+                                                AppLocalizations.of(context)
+                                                    .translate(
+                                                        "scr003.errorEmptyCV")),
+                                            actions: <Widget>[
+                                              new FlatButton(
+                                                child: new Text(
+                                                  AppLocalizations.of(context)
+                                                      .translate(
+                                                          "scr003.btnUnderStood"),
+                                                  style: TextStyle(
+                                                      color: Colors.red[300]),
+                                                ),
+                                                onPressed: () => {
+                                                  _validate = false,
+                                                  Navigator.of(context).pop()
+                                                },
+                                              )
+                                            ]);
+                                      })
+                                }
+                              else
+                                {
+                                  for (var cv in listResume)
+                                    {
+                                      if (cv.title.compareTo(
+                                              _controllerTitle.text) ==
+                                          0)
+                                        {
+                                          _hasTitle = true,
+                                        }
+                                    },
+                                  if (!_hasTitle)
+                                    {
+                                      BlocProvider.of<LoadListCVBloc>(
+                                          buildContext)
+                                        ..add(AddNewCVEvent(
+                                            cvTitle: _controllerTitle.text,
+                                            skillsId: dropdownValue,
+                                            lang: lang)),
+                                      Navigator.of(context).pop(),
+                                      _controllerTitle.text = "",
+                                    }
+                                  else
+                                    {
+                                      showDialog(
+                                          context: context,
+                                          builder: (loadListCVBlocContext) {
+                                            return new AlertDialog(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                20.0))),
+                                                title: Text(AppLocalizations.of(
+                                                        context)
+                                                    .translate(
+                                                        "scr003.errorDuplicateCV")),
+                                                actions: <Widget>[
+                                                  new FlatButton(
+                                                    child: new Text(
+                                                      AppLocalizations.of(
+                                                              context)
+                                                          .translate(
+                                                              "scr003.btnUnderStood"),
+                                                      style: TextStyle(
+                                                          color:
+                                                              Colors.red[300]),
+                                                    ),
+                                                    onPressed: () => {
+                                                      _hasTitle = false,
+                                                      _validate = true,
+                                                      Navigator.of(context)
+                                                          .pop()
+                                                    },
+                                                  )
+                                                ]);
+                                          }),
+                                    }
+                                }
+                            }),
+                  ),
+                ],
+                content: Builder(
+                  builder: (context) {
+//place to input
+                    return Container(
+// color: Colors.amber,
+                      margin: EdgeInsets.only(top: 20),
+                      width: displayWidth(context),
+                      height: displayHeight(context) * 0.25,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          TextField(
+                            controller: _controllerTitle,
+                            decoration: new InputDecoration(
+                                border: new OutlineInputBorder(
+                                    borderSide:
+                                        new BorderSide(color: Colors.teal)),
+                                hintText: AppLocalizations.of(context)
+                                    .translate("scr003.hintTextCV"),
+                                helperText: AppLocalizations.of(context)
+                                    .translate("scr003.helpTextCV"),
+                                labelText: AppLocalizations.of(context)
+                                    .translate("scr003.labelTextCV"),
+                                prefixIcon: Icon(
+                                  Icons.title,
+                                  color: AppColors.primaryDarkColor,
+                                ),
+                                prefixText: ' ',
+                                suffixStyle: TextStyle(
+                                  color: AppColors.primaryDarkColor,
+                                )),
+//validation
+                            onChanged: (value) {
+                              value.isEmpty
+                                  ? _validate = true
+                                  : _validate = false;
+                            },
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Container(
+                                margin: EdgeInsets.only(left: 0),
+                                child: Text(
+                                  AppLocalizations.of(context)
+                                      .translate("scr003.chooseMajor"),
+                                  style: TextStyle(
+                                      color: AppColors.primaryTextColor
+                                          .withOpacity(0.5),
+                                      fontSize: 13),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: Container(
+                                  width: displayWidth(context) * 0.25,
+                                  child: Center(
+                                    child: DropdownButton<int>(
+                                      items: _dropdownMenuItem,
+                                      value: dropdownValue,
+                                      elevation: 16,
+                                      style: TextStyle(
+                                          color: AppColors.primaryDarkColor),
+                                      underline: Container(
+                                        height: 2,
+                                        color: AppColors.primaryDarkColor,
+                                      ),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          dropdownValue = value;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                ),
+              );
+            });
+          });
+    },
+    tooltip: AppLocalizations.of(buildContext).translate("scr003.createCV"),
+    child: Icon(Icons.add),
+    backgroundColor: AppColors.secondaryLightColor,
+  );
 }

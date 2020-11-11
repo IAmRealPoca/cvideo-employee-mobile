@@ -62,7 +62,7 @@ class RecruitmentSectionListView extends StatelessWidget {
               margin: EdgeInsets.symmetric(horizontal: 15),
 
               //list section infor and url
-              child: Row(
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Column(
@@ -116,7 +116,7 @@ class RecruitmentSectionListView extends StatelessWidget {
                     height: size.height * 0.20,
                     child: ListView.builder(
                       scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) =>  RecruitmentCardLoading(),
+                      itemBuilder: (context, index) => RecruitmentCardLoading(),
                       itemCount: 5,
                     ),
                   );

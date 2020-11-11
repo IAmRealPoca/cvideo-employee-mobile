@@ -430,8 +430,8 @@ class _SCR010State extends State<SCR010> with WidgetsBindingObserver {
                                                 postId: args.postId,
                                                 isApplied: state
                                                     .recruitmentPost.isApplied,
-                                                majorId: state.recruitmentPost
-                                                    .major.majorId,
+                                                skillsId: state.recruitmentPost
+                                                    .skills.skillsId,
                                               ))
                                           .then((value) {
                                         // BlocProvider.of<RecruitmentDetailBloc>(context)

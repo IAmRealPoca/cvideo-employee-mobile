@@ -12,14 +12,15 @@ class GetListCVLoading extends LoadListCVState {}
 
 class GetListCVSuccess extends LoadListCVState {
   final List<Resume> listResume;
-  final List<MajorDetail> listMajor;
+  final List<SkillsDetail> listSkills;
 
-  GetListCVSuccess({this.listResume, this.listMajor});
+  GetListCVSuccess({this.listResume, this.listSkills});
 
-  GetListCVSuccess copyWith({List<Resume> listResume, List<Major> listMajor}) {
+  GetListCVSuccess copyWith(
+      {List<Resume> listResume, List<Skills> listSkills}) {
     return GetListCVSuccess(
         listResume: listResume ?? this.listResume,
-        listMajor: listMajor ?? this.listMajor);
+        listSkills: listSkills ?? this.listSkills);
   }
 
   @override
@@ -42,16 +43,16 @@ class GetListCVRefresh extends LoadListCVState {
 class DeleteCVSuccess extends LoadListCVState {
   final List<Resume> listResume;
   final String result;
-  final List<MajorDetail> listMajor;
+  final List<SkillsDetail> listSkills;
 
-  DeleteCVSuccess({this.listResume, this.result, this.listMajor});
+  DeleteCVSuccess({this.listResume, this.result, this.listSkills});
 
   DeleteCVSuccess copyWith(
-      {String result, List<Resume> listResume, List<MajorDetail> listMajor}) {
+      {String result, List<Resume> listResume, List<Skills> listSkills}) {
     return DeleteCVSuccess(
         result: result ?? this.result,
         listResume: listResume ?? this.listResume,
-        listMajor: listMajor ?? this.listMajor);
+        listSkills: listSkills ?? this.listSkills);
   }
 
   @override
@@ -60,20 +61,20 @@ class DeleteCVSuccess extends LoadListCVState {
 
 class CreateCVSuccessState extends LoadListCVState {
   final List<Resume> listResume;
-  final List<Major> listMajor;
+  final List<Skills> listSkills;
   final int cvId;
   final String title;
 
   CreateCVSuccessState(
-      {this.listResume, this.listMajor, this.cvId, this.title});
+      {this.listResume, this.listSkills, this.cvId, this.title});
 
   CreateCVSuccessState copyWith(
-      {List<Resume> listResume, List<Major> listMajor, int cvId}) {
+      {List<Resume> listResume, List<Skills> listSkills, int cvId}) {
     return CreateCVSuccessState(
         title: title ?? this.title,
         cvId: cvId ?? this.cvId,
         listResume: listResume ?? this.listResume,
-        listMajor: listMajor ?? this.listMajor);
+        listSkills: listSkills ?? this.listSkills);
   }
 
   @override

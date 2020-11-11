@@ -21,19 +21,19 @@ class ResumeProvider {
     return listResume;
   }
 
-  Future<List<MajorDetail>> fetchMajorList(String lang) async {
+  Future<List<SkillsDetail>> fetchSkillList(String lang) async {
     AppStorage appStorage = AppStorage.instance;
     String token = await appStorage.readSecureApiToken();
-    List<MajorDetail> listMajor;
-    final response = await AppHttpClient.get("/majors?lang=" + lang,
+    List<SkillsDetail> listSkill;
+    final response = await AppHttpClient.get("/skills?lang=" + lang,
         headers: {"Authorization": "bearer $token"});
     if (successCode != response.statusCode) {
       throw Exception("Failed to loading!");
     }
     final List<dynamic> dataJson = json.decode(utf8.decode(response.bodyBytes));
 
-    listMajor = dataJson.map((e) => MajorDetail.fromJson(e)).toList();
-    return listMajor;
+    listSkill = dataJson.map((e) => SkillsDetail.fromJson(e)).toList();
+    return listSkill;
   }
 
   Future<String> deleteCv(String cvId) async {
@@ -62,7 +62,7 @@ class ResumeProvider {
     return resume;
   }
 
-  Future<String> addNewCV(String title, int majorId) async {
+  Future<String> addNewCV(String title, int skillId) async {
     String token = await storage.readSecureApiToken();
     String result = "";
     final response = await AppHttpClient.post("/cvs",
@@ -70,7 +70,7 @@ class ResumeProvider {
           "Content-Type": "application/json",
           "Authorization": "bearer $token"
         },
-        body: jsonEncode({"title": title, "majorId": majorId}));
+        body: jsonEncode({"title": title, "skillId": skillId}));
     if (201 != response.statusCode) {
       throw Exception("Failed to adding!");
     } else {

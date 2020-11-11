@@ -7,7 +7,7 @@ class CVDetail {
   Employee employee;
   List<Session> sessions;
   String created;
-  Major major;
+  SkillsDetail skillsDetail;
 
   CVDetail(
       {this.cvId,
@@ -15,7 +15,7 @@ class CVDetail {
       this.employee,
       this.sessions,
       this.created,
-      this.major});
+      this.skillsDetail});
 
   factory CVDetail.fromJson(Map<String, dynamic> json) {
     // Iterable listSession = json['sections'] == null ? [] : json['sections'];
@@ -31,6 +31,6 @@ class CVDetail {
         employee: Employee.fromJson(json['employee']),
         created: json["created"],
         sessions: sections,
-        major: Major.fromJson(json['major']));
+        skillsDetail: SkillsDetail.fromJson(json['skills']));
   }
 }

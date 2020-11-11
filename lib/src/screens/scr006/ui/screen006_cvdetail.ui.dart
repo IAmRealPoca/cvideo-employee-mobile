@@ -1449,7 +1449,7 @@ Widget buildCVTitle(BuildContext context1, String title,
                                           created: cvDetail.created,
                                           cvId: cvDetail.cvId,
                                           employee: cvDetail.employee,
-                                          major: cvDetail.major,
+                                          skillsDetail: cvDetail.skillsDetail,
                                           sessions: cvDetail.sessions,
                                           title: _controller.text),
                                       lang));

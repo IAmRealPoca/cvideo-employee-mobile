@@ -185,7 +185,7 @@ class DetailCVProvider {
       body: jsonEncode({
         "cvId": cvDetail.cvId,
         "title": cvDetail.title,
-        "majorId": cvDetail.major.majorId,
+        "skillsId": cvDetail.skillsDetail.skillsId,
       }),
     );
     if (response.statusCode == 204) {
