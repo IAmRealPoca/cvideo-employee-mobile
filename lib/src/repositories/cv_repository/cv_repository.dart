@@ -14,8 +14,8 @@ import 'package:cvideo_mobile/src/repositories/repositories.dart';
 
 class CVRepository {
   CVProvider _cvProvider = CVProvider();
-  Future<List<CV>> fetchListCVs(int majorId) =>
-      _cvProvider.fetchListCVs(majorId);
+  Future<List<CV>> fetchListCVs(int skillsId) =>
+      _cvProvider.fetchListCVs(skillsId);
 
   Future<String> applyCv(int postId, int cvId) =>
       _cvProvider.applyCv(postId, cvId);

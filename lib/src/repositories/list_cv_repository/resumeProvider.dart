@@ -21,7 +21,7 @@ class ResumeProvider {
     return listResume;
   }
 
-  Future<List<SkillsDetail>> fetchSkillList(String lang) async {
+  Future<List<SkillsDetail>> fetchSkillsList(String lang) async {
     AppStorage appStorage = AppStorage.instance;
     String token = await appStorage.readSecureApiToken();
     List<SkillsDetail> listSkill;
@@ -62,7 +62,7 @@ class ResumeProvider {
     return resume;
   }
 
-  Future<String> addNewCV(String title, int skillId) async {
+  Future<String> addNewCV(String title, int skillsId) async {
     String token = await storage.readSecureApiToken();
     String result = "";
     final response = await AppHttpClient.post("/cvs",
@@ -70,7 +70,7 @@ class ResumeProvider {
           "Content-Type": "application/json",
           "Authorization": "bearer $token"
         },
-        body: jsonEncode({"title": title, "skillId": skillId}));
+        body: jsonEncode({"title": title, "skillsId": skillsId}));
     if (201 != response.statusCode) {
       throw Exception("Failed to adding!");
     } else {

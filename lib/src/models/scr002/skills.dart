@@ -1,5 +1,5 @@
 /*
- * File: major.dart
+ * File: skills.dart
  * Project: CVideo
  * File Created: Monday, 29th June 2020 5:36:23 pm
  * Author: minhndse130706 (minhndse130706@fpt.edu.vn)

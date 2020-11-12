@@ -17,12 +17,12 @@ import 'package:cvideo_mobile/src/models/models.dart';
 class CVProvider {
   final successCode = 200;
   final successAddCode = 201;
-  Future<List<CV>> fetchListCVs(int majorId) async {
+  Future<List<CV>> fetchListCVs(int skillsId) async {
     AppStorage appStorage = AppStorage.instance;
     String token = await appStorage.readSecureApiToken();
     List<CV> cvLists;
     final response = await AppHttpClient.get(
-        "/employees/current-employee/cvs?majorId=$majorId",
+        "/employees/current-employee/cvs?skillsId=$skillsId",
         headers: {"Authorization": "bearer $token"});
     if (successCode != response.statusCode) {
       throw Exception("Failed to loading!");

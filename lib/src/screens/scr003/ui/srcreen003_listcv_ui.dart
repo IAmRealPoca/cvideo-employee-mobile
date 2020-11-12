@@ -1017,7 +1017,7 @@ Widget listCVFloatingButton(
                                 margin: EdgeInsets.only(left: 0),
                                 child: Text(
                                   AppLocalizations.of(context)
-                                      .translate("scr003.chooseMajor"),
+                                      .translate("scr003.chooseSkills"),
                                   style: TextStyle(
                                       color: AppColors.primaryTextColor
                                           .withOpacity(0.5),
